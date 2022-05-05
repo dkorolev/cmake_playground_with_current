@@ -17,12 +17,25 @@ FetchContent_MakeAvailable(current)
 
 include_directories(${current_SOURCE_DIR})
 
-file(GLOB_RECURSE SOURCE_FILES "src/*.cc")
-foreach(SOURCE_FILE ${SOURCE_FILES})
-  get_filename_component(TARGET_NAME "${SOURCE_FILE}" NAME_WE)
-  add_executable(${TARGET_NAME} "${SOURCE_FILE}") 
-  target_link_libraries(${TARGET_NAME} PRIVATE Threads::Threads)
-  if(TARGET_NAME MATCHES "test_*")
-    add_test(NAME ${TARGET_NAME} COMMAND ${TARGET_NAME})
-  endif()
-endforeach()
+add_custom_command(OUTPUT ${current_SOURCE_DIR}/current_build.h
+                   WORKING_DIRECTORY ${current_SOURCE_DIR}
+                   COMMAND scripts/gen-current-build.sh
+                   ARGS current_build.h)
+add_custom_target(current_build_h DEPENDS ${current_SOURCE_DIR}/current_build.h)
+
+add_executable(hw0 src/hw0.cc)
+target_link_libraries(hw0 PRIVATE Threads::Threads)
+
+add_executable(hw1 src/hw1.cc)
+target_link_libraries(hw1 PRIVATE Threads::Threads)
+
+add_executable(hw2 src/hw2.cc)
+target_link_libraries(hw2 PRIVATE Threads::Threads)
+
+add_executable(hw3 src/hw3.cc)
+add_dependencies(hw3 current_build_h)
+target_link_libraries(hw3 PRIVATE Threads::Threads)
+
+add_library(lib_hw4_name src/lib_hw4_name.cc)
+add_executable(hw4 src/hw4.cc)
+target_link_libraries(hw4 PRIVATE Threads::Threads lib_hw4_name)
