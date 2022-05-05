@@ -17,10 +17,17 @@ FetchContent_MakeAvailable(current)
 
 include_directories(${current_SOURCE_DIR})
 
+if(NOT WIN32)
 add_custom_command(OUTPUT ${current_SOURCE_DIR}/current_build.h
                    WORKING_DIRECTORY ${current_SOURCE_DIR}
                    COMMAND scripts/gen-current-build.sh
                    ARGS current_build.h)
+else()
+add_custom_command(OUTPUT ${current_SOURCE_DIR}/current_build.h
+                   WORKING_DIRECTORY ${current_SOURCE_DIR}
+                   COMMAND echo
+                   ARGS namespace current::build { constexpr static const char* kGitCommit = "Not here pls."\; } >current_build.h)
+endif()
 add_custom_target(current_build_h DEPENDS ${current_SOURCE_DIR}/current_build.h)
 
 add_executable(hw0 src/hw0.cc)
