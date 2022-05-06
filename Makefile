@@ -6,8 +6,8 @@
 
 .PHONY: debug release debug_dir release_dir mark_deps_as_built indent clean
 
-DEBUG_BUILD_DIR=$(shell echo "$${DEBUG_BUILD_DIR:-Debug}")
-RELEASE_BUILD_DIR=$(shell echo "$${RELEASE_BUILD_DIR:-Release}")
+DEBUG_BUILD_DIR=$(shell echo "$${DEBUG_BUILD_DIR:-.debug}")
+RELEASE_BUILD_DIR=$(shell echo "$${RELEASE_BUILD_DIR:-.release}")
 
 OS=$(shell uname)
 ifeq ($(OS),Darwin)

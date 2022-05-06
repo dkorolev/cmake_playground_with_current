@@ -1,5 +1,5 @@
-Debug
-Release
+.debug
+.release
 CMakeLists.txt.user
 .vs
 out
