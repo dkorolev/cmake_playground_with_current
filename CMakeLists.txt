@@ -19,9 +19,9 @@ include_directories(${current_SOURCE_DIR})
 
 if(NOT WIN32)
 add_custom_command(OUTPUT ${current_SOURCE_DIR}/current_build.h
-                   WORKING_DIRECTORY ${current_SOURCE_DIR}
-                   COMMAND scripts/gen-current-build.sh
-                   ARGS current_build.h)
+                   WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+                   COMMAND ${current_SOURCE_DIR}/scripts/gen-current-build.sh
+                   ARGS ${current_SOURCE_DIR}/current_build.h)
 else()
 add_custom_command(OUTPUT ${current_SOURCE_DIR}/current_build.h
                    WORKING_DIRECTORY ${current_SOURCE_DIR}
